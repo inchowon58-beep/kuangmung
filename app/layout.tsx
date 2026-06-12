@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import {
+  getStructuredData,
+  siteDescription,
+  siteTitle,
+  siteUrl,
+  targetKeywords,
+} from "@/lib/seo";
 import "./globals.css";
-
-const siteUrl = "https://ulsan-dog-surrender.vercel.app";
-const siteTitle = "울산강아지파양 | 유기견 보호소 및 강아지 파양 전문 안내";
-const siteDescription =
-  "울산강아지파양 전문 상담센터입니다. 울산 지역 강아지 파양, 유기견 보호소 위탁, 입양 연계까지 책임 있는 절차로 안내해 드립니다. 전화 0505-707-0401";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -13,15 +15,7 @@ export const metadata: Metadata = {
     template: "%s | 울산강아지파양",
   },
   description: siteDescription,
-  keywords: [
-    "울산강아지파양",
-    "울산 강아지 파양",
-    "울산 유기견 보호소",
-    "강아지 파양",
-    "유기견 보호",
-    "아가펫",
-    "울산 반려견 위탁",
-  ],
+  keywords: [...targetKeywords, "울산 강아지 파양", "울산 유기견", "아가펫"],
   authors: [{ name: "아가펫" }],
   creator: "아가펫",
   publisher: "아가펫",
@@ -40,7 +34,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "ko_KR",
     url: siteUrl,
-    siteName: "울산강아지파양 안내",
+    siteName: "울산강아지파양 · 울산유기견보호소 안내",
     title: siteTitle,
     description: siteDescription,
     images: [
@@ -48,7 +42,7 @@ export const metadata: Metadata = {
         url: "/images/shelter-01.png",
         width: 1200,
         height: 630,
-        alt: "울산강아지파양 보호소 전경 — 유기견 보호 및 파양 안내",
+        alt: "울산강아지파양·울산유기견보호소 보호소 전경",
       },
     ],
   },
@@ -62,6 +56,11 @@ export const metadata: Metadata = {
     canonical: siteUrl,
   },
   category: "반려동물",
+  verification: {
+    other: {
+      "naver-site-verification": "c151c15d347207e0ea6fdb5db02cb092acb5fe91",
+    },
+  },
 };
 
 export default function RootLayout({
@@ -69,6 +68,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const structuredData = getStructuredData();
+
   return (
     <html lang="ko">
       <head>
@@ -78,10 +79,14 @@ export default function RootLayout({
           crossOrigin="anonymous"
           href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
         />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(structuredData),
+          }}
+        />
       </head>
-      <body className="font-sans pb-safe-floating">
-        {children}
-      </body>
+      <body className="font-sans pb-safe-floating">{children}</body>
     </html>
   );
 }

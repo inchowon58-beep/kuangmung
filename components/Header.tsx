@@ -1,5 +1,6 @@
 const navItems = [
   { href: "#about", label: "소개" },
+  { href: "#services", label: "보호 서비스" },
   { href: "#process", label: "파양 절차" },
   { href: "#shelter", label: "보호소 안내" },
   { href: "#faq", label: "자주 묻는 질문" },
